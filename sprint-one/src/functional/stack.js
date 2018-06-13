@@ -10,7 +10,7 @@ var Stack = function() {
   };
 
   someInstance.pop = function() {
-    if (someInstance.top > 0) {
+    if (someInstance.size() > 0) {
       return storage[--someInstance.top];
     }
   };
