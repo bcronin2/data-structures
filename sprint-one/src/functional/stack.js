@@ -6,14 +6,12 @@ var Stack = function() {
   someInstance.top = 0;
 
   someInstance.push = function(value) {
-    storage[someInstance.top] = value;
-    someInstance.top++;
+    storage[someInstance.top++] = value;
   };
 
   someInstance.pop = function() {
     if (someInstance.top > 0) {
-      var value = storage[--someInstance.top];
-      return value;
+      return storage[--someInstance.top];
     }
   };
 
