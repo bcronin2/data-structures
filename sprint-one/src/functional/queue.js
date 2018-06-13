@@ -12,8 +12,7 @@ var Queue = function() {
 
   someInstance.dequeue = function() {
     if (someInstance.size() > 0) {
-      var value = storage[someInstance.front++];
-      return value;
+      return storage[someInstance.front++];
     }
   };
 
