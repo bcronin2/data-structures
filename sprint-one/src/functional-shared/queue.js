@@ -1,10 +1,10 @@
 var Queue = function() {
-  var thisInstance = {};
-  thisInstance.storage = {};
-  thisInstance.front = 0;
-  thisInstance.back = 0;
-  _.extend(thisInstance, queueMethods);
-  return thisInstance;
+  var instance = {};
+  instance.storage = {};
+  instance.front = 0;
+  instance.back = 0;
+  _.extend(instance, queueMethods);
+  return instance;
 };
 
 var queueMethods = {

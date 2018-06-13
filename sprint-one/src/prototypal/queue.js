@@ -1,9 +1,9 @@
 var Queue = function() {
-  var thisInstance = Object.create(queueMethods);
-  thisInstance.storage = {};
-  thisInstance.front = 0;
-  thisInstance.back = 0;
-  return thisInstance;
+  var instance = Object.create(queueMethods);
+  instance.storage = {};
+  instance.front = 0;
+  instance.back = 0;
+  return instance;
 };
 
 var queueMethods = {

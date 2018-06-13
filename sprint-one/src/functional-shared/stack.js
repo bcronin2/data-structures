@@ -1,9 +1,9 @@
 var Stack = function() {
-  var thisInstance = {};
-  thisInstance.storage = {};
-  thisInstance.top = 0;
-  _.extend(thisInstance, stackMethods);
-  return thisInstance;
+  var instance = {};
+  instance.storage = {};
+  instance.top = 0;
+  _.extend(instance, stackMethods);
+  return instance;
 };
 
 var stackMethods = {
