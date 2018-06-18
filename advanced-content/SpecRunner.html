@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css" />
+    <script src="../lib/jquery/jquery.js"></script>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/chai/chai.js"></script>
+    <script src="../lib/underscore/underscore.js"></script>
+    <script>
+mocha.setup('bdd');
+window.expect = chai.expect;
+$(function() {
+  window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run();
+});
+    </script>
+
+    <!-- source files -->
+    <script type="text/javascript" src="src/bloomFilter.js"></script>
+    <script type="text/javascript" src="src/bloomProfiler.js"></script>
+    <script type="text/javascript" src="src/doublyLinkedList.js"></script>
+    <script type="text/javascript" src="src/advancedGraph.js"></script>
+    <script type="text/javascript" src="src/rebalancingSearchTree.js"></script>    
+
+    <!-- spec files -->
+    <script type="text/javascript" src="spec/bloomFilterSpec.js"></script>
+    <script type="text/javascript" src="spec/doublyLinkedListSpec.js"></script>
+    <script type="text/javascript" src="spec/advancedGraphSpec.js"></script>
+    <script type="text/javascript" src="spec/rebalancingSearchTreeSpec.js"></script>    
+
+  </head>
+  <body>
+    <div id="mocha"></div>
+  </body>
+</html>

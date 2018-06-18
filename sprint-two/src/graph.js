@@ -1,39 +1,54 @@
-
-
-// Instantiate a new graph
 var Graph = function() {
+  this.nodes = [];
+  this.edges = [];
 };
 
-// Add a node to the graph, passing in the node's value.
+// O(1)
 Graph.prototype.addNode = function(node) {
+  this.nodes.push(node);
 };
 
-// Return a boolean value indicating if the value passed to contains is represented in the graph.
+// O(n)
 Graph.prototype.contains = function(node) {
+  return this.nodes.includes(node);
 };
 
-// Removes a node from the graph.
+// O(n^2) (worst-case, if there are many edges)
 Graph.prototype.removeNode = function(node) {
+  var toRemove = this.nodes.indexOf(node);
+  this.nodes.splice(toRemove, 1);
+  for (var i = this.edges.length - 1; i >= 0; i--) {
+    this.edges.splice(i, 1);
+  }
 };
 
-// Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
-Graph.prototype.hasEdge = function(fromNode, toNode) {
-};
-
-// Connects two nodes in a graph by adding an edge between them.
+// O(n^2) (worst-case, if there are many edges)
 Graph.prototype.addEdge = function(fromNode, toNode) {
+  if (this.contains(fromNode) && this.contains(toNode) && !this.hasEdge(fromNode, toNode)) {
+    this.edges.push([fromNode, toNode]);
+  }
 };
 
-// Remove an edge between any two specified (by value) nodes.
+// O(n^2) (worst-case, if there are many edges)
+Graph.prototype.hasEdge = function(fromNode, toNode) {
+  for (var i = 0; i < this.edges.length; i++) {
+    if (this.edges[i].includes(fromNode) && this.edges[i].includes(toNode)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+// O(n^2) (worst-case, if there are many edges)
 Graph.prototype.removeEdge = function(fromNode, toNode) {
+  for (var i = 0; i < this.edges.length; i++) {
+    if (this.edges[i].includes(fromNode) && this.edges[i].includes(toNode)) {
+      this.edges.splice(i, 1);
+    }
+  }
 };
 
-// Pass in a callback which will be executed on each node of the graph.
+// O(n)
 Graph.prototype.forEachNode = function(cb) {
+  this.nodes.forEach(cb);
 };
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */
-
-

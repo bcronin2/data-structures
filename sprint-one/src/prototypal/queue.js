@@ -12,7 +12,9 @@ var queueMethods = {
   },
   dequeue: function() {
     if (this.size() > 0) {
-      return this.storage[this.front++];
+      var item = this.storage[this.front];
+      delete this.storage[this.front++];
+      return item;
     }
   },
   size: function() {

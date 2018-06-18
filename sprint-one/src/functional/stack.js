@@ -1,23 +1,25 @@
 var Stack = function() {
-  var someInstance = {};
+  var instance = {};
 
   var storage = {};
 
-  someInstance.top = 0;
+  instance.top = 0;
 
-  someInstance.push = function(value) {
-    storage[someInstance.top++] = value;
+  instance.push = function(value) {
+    storage[instance.top++] = value;
   };
 
-  someInstance.pop = function() {
-    if (someInstance.size() > 0) {
-      return storage[--someInstance.top];
+  instance.pop = function() {
+    if (instance.size() > 0) {
+      var item = storage[--instance.top];
+      delete storage[instance.top];
+      return item;
     }
   };
 
-  someInstance.size = function() {
-    return someInstance.top;
+  instance.size = function() {
+    return instance.top;
   };
 
-  return someInstance;
+  return instance;
 };

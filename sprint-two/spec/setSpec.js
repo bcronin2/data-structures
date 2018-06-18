@@ -23,5 +23,13 @@ describe('set', function() {
     set.remove('Mel Gibson');
     expect(set.contains('Mel Gibson')).to.equal(false);
   });
+  
+  // ADDITIONAL TESTS  
+  it('should add non-string data types', function() {
+    set.add(['Mel Gibson', 'Donald Trump']);
+    set.add({people: ['Mel Gibson', 'Donald Trump']});
+    expect(set.contains(['Mel Gibson', 'Donald Trump'])).to.equal(true);
+    expect(set.contains({people: ['Mel Gibson', 'Donald Trump']})).to.equal(true);
+  });
 
 });

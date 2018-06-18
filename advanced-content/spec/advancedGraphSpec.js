@@ -1,8 +1,8 @@
-describe('graph', function() {
+describe('advanced graph', function() {
   var graph;
 
   beforeEach(function() {
-    graph = new Graph();
+    graph = new AdvancedGraph();
   });
 
   it('should have methods named "addNode", "contains", "removeNode", "addEdge", "hasEdge", "removeEdge" and "forEachNode"', function() {
@@ -84,6 +84,26 @@ describe('graph', function() {
     graph.addEdge(1, 2);
     graph.removeEdge(1, 2);
     expect(graph.hasEdge(1, 2)).to.equal(false);
+  });
+
+  it('should not overwrite existing nodes', function() {
+    graph.addNode(1);
+    graph.addNode(2);
+    graph.addEdge(1, 2);
+    graph.addNode(1);
+    expect(graph.hasEdge(1, 2)).to.equal(true);
+  });
+
+  it('should perform depth-first search', function() {
+    for (var i = 1; i <= 6; i++) {
+      graph.addNode(i);
+    }
+    graph.addEdge(1, 2);
+    graph.addEdge(2, 3);
+    graph.addEdge(2, 4);
+    graph.addEdge(3, 5);
+    expect(graph.depthFirstSearch(1, 5)).to.equal(true);
+    expect(graph.depthFirstSearch(1, 6)).to.equal(false);
   });
   
 });

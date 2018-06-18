@@ -47,8 +47,7 @@ describe('hashTable', function() {
     window.getIndexBelowMaxForKey = oldHashFunction;
   });
 
-  // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -58,7 +57,7 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -73,4 +72,38 @@ describe('hashTable', function() {
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
   });
+  
+  // ADDITIONAL TESTS
+  it ('should correctly remove elements after collisions', function() {
+    var v1 = 'val1';
+    var v2 = 'val2';
+    var oldHashFunction = window.getIndexBelowMaxForKey;
+    window.getIndexBelowMaxForKey = function() { return 0; };
+    hashTable.insert(v1, v1);
+    hashTable.insert(v2, v2);
+    hashTable.remove(v2);
+    expect(hashTable.retrieve(v1)).to.equal(v1);
+    window.getIndexBelowMaxForKey = oldHashFunction;
+  });
+  
+  it ('should not resize when duplicate entries are inserted', function() {
+    var v1 = 'val1';
+    for (let i = 0; i < 10; i++) {
+      hashTable.insert(v1, v1);
+    }
+    expect(hashTable._limit).to.equal(8);
+  });
+  
+  it ('should not resize when non-existent entries are removed', function() {
+    var vals = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+    var dummy = 'z';
+    for (let i = 0; i < vals.length; i++) {
+      hashTable.insert(vals[i], vals[i]);
+    }
+    for (let i = 0; i < 6; i++) {
+      hashTable.remove(dummy);
+    }
+    expect(hashTable._limit).to.equal(16);
+  });
+  
 });

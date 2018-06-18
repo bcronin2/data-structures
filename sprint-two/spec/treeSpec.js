@@ -40,5 +40,13 @@ describe('tree', function() {
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
   });
-
+  
+  // ADDITIONAL TESTS  
+  it('should allow addition of null and undefined values', function() {
+    tree.addChild(null);
+    tree.addChild(undefined);
+    expect(tree.children[0].value).to.equal(null);
+    expect(tree.children[1].value).to.equal(undefined);
+  });
+  
 });

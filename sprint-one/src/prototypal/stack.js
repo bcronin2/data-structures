@@ -11,7 +11,9 @@ var stackMethods = {
   },
   pop: function(value) {
     if (this.size() > 0) {
-      return this.storage[--this.top];
+      var item = this.storage[--this.top];
+      delete this.storage[this.top];
+      return item;
     }
   },
   size: function() {
