@@ -1,8 +1,8 @@
-describe('rebalancingSearchTree', function() {
+describe('balancingSearchTree', function() {
   var rebalancingSearchTree;
 
   beforeEach(function() {
-    rebalancingSearchTree = new RebalancingSearchTree(5);
+    rebalancingSearchTree = new BalancingSearchTree(5);
   });
 
   it('should have methods named "insert", "contains", and "depthFirstLog', function() {
@@ -16,8 +16,9 @@ describe('rebalancingSearchTree', function() {
     rebalancingSearchTree.insert(3);
     rebalancingSearchTree.insert(7);
     rebalancingSearchTree.insert(6);
-    expect(rebalancingSearchTree.left.value).to.equal(2);
-    expect(rebalancingSearchTree.right.right.value).to.equal(7);
+    rebalancingSearchTree.insert(8);   
+    expect(rebalancingSearchTree.left.value).to.equal(3);
+    console.log(rebalancingSearchTree.toString());     
   });
 
   it('should have a working "contains" method', function() {
@@ -25,7 +26,8 @@ describe('rebalancingSearchTree', function() {
     rebalancingSearchTree.insert(3);
     rebalancingSearchTree.insert(7);
     expect(rebalancingSearchTree.contains(7)).to.equal(true);
-    expect(rebalancingSearchTree.contains(8)).to.equal(false);    
+    expect(rebalancingSearchTree.contains(8)).to.equal(false);
+    console.log(rebalancingSearchTree.toString());      
   });
 
   it('should execute a callback on every value in a tree using "depthFirstLog"', function() {
@@ -36,6 +38,7 @@ describe('rebalancingSearchTree', function() {
     rebalancingSearchTree.insert(7);
     rebalancingSearchTree.depthFirstLog(func);
     expect(array).to.eql([3, 2, 5, 7]);
+    console.log(rebalancingSearchTree.toString());     
   });
   
   // ADDITIONAL TESTS
@@ -47,6 +50,7 @@ describe('rebalancingSearchTree', function() {
     rebalancingSearchTree.insert(7);
     rebalancingSearchTree.depthFirstLog(func);
     expect(array).to.eql([5, 2, 7]);
+    console.log(rebalancingSearchTree.toString());     
   });
 
   it('should correctly return tree height', function() {
@@ -57,6 +61,7 @@ describe('rebalancingSearchTree', function() {
     expect(rebalancingSearchTree.height).to.equal(2);
     rebalancingSearchTree.insert(12);
     expect(rebalancingSearchTree.height).to.equal(3);
+    console.log(rebalancingSearchTree.toString());     
   });
 
   it ('should rebalance so that height is never greater than ceil(log n)', function() {

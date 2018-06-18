@@ -1,4 +1,4 @@
-class RebalancingSearchTree {
+class BalancingSearchTree {
   
   constructor(value, parent) {
     this.value = value;
@@ -12,19 +12,19 @@ class RebalancingSearchTree {
   insert(value) {
     if (value < this.value) {
       if (!this.left.height) {
-        this.left = new RebalancingSearchTree(value, this);
+        this.left = new BalancingSearchTree(value, this);
       } else {
         this.left.insert(value);
       }
     } else if (value > this.value) {
       if (!this.right.height) {
-        this.right = new RebalancingSearchTree(value, this);
+        this.right = new BalancingSearchTree(value, this);
       } else {
         this.right.insert(value);
       }
     }
     this.height = Math.max(this.left.height, this.right.height) + 1;
-    this._balanceIfNecessry();
+    this._balanceIfNecessary();
   }
   
   // O(log n)
@@ -67,7 +67,7 @@ class RebalancingSearchTree {
 
         while (childNode.parent !== parentNode && parentIndex < rows[rowIndex - 1].length) {
           str += spacesForRow(rowIndex - 1, rows.length);
-          parentNode = rows[rowIndex - 1][parentIndex++];
+          parentNode = rows[rowIndex - 1][++parentIndex];
         }
 
         if (childNode.value < parentNode.value) {
@@ -88,7 +88,7 @@ class RebalancingSearchTree {
 
   // HELPER FUNCTIONS
 
-  _balanceIfNecessry() {
+  _balanceIfNecessary() {
     if (this.left.height - this.right.height > 1) {
       this._balance('left', 'right');
     } else if (this.right.height - this.left.height > 1) {
@@ -99,20 +99,28 @@ class RebalancingSearchTree {
   }
 
   _balance(side1, side2) {
-    var newChild = new RebalancingSearchTree(this.value, this);
-    newChild[side2] = this[side2];
+    if (this[side2].height || this[side1][side2].height) {
+      var newRoot = this[side1]._getExtremum(side2);
+      newRoot.parent[side2] = newRoot[side1];
+      if (newRoot[side1].height) {
+        newRoot[side1].parent = newRoot.parent;
+      }
+      newRoot.parent.height = Math.max(newRoot.parent[side1].height, newRoot.parent[side2].height) + 1;
 
-    var newRoot = this[side1]._getExtremum(side2);
-    newRoot.parent[side2] = (newRoot.parent[side2].height) ? newRoot[side1] : {height: 0};
-    newRoot.parent.height = Math.max(newRoot.parent[side1].height, newRoot.parent[side2].height) + 1;
-    if (newRoot[side1].height) {
-      newRoot[side1].parent = newRoot.parent;
+      var newChild = new BalancingSearchTree(this.value, this);
+      newChild[side2] = this[side2];    
+
+      this.value = newRoot.value;
+      this[side2].parent = newChild;
+      this[side2] = newChild;
+      this[side2].height++;
+      this.height = this[side1]._balanceIfNecessary().height + 1;
+    } else {
+      this[side2] = new BalancingSearchTree(this.value, this);
+      this.value = this[side1].value;
+      this[side1] = this[side1][side1];
+      this[side1].parent = this;
     }
-
-    this.value = newRoot.value;
-    this[side2] = newChild;
-    this[side2].height++;
-    this.height = this[side1]._balanceIfNecessry().height + 1;
   }
 
   _getExtremum(direction) {
@@ -140,7 +148,8 @@ class RebalancingSearchTree {
       if (nextNode.right.height) {
         nodes.push(nextNode.right);
       }
-      if (nodes.length && nextNode.value > nodes[0].value) {
+      if (nodes.length && 
+          (nextNode.value > nodes[0].value || nextNode === nodes[0].parent)) {
         rows.push([]);
       } 
     }
